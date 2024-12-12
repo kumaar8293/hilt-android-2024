@@ -1,9 +1,9 @@
 package com.example.hiltandroid2024.module
 
-import com.example.hiltandroid2024.repository.FirebaseRepository
+import com.example.hiltandroid2024.repository.SQLRepository
 import com.example.hiltandroid2024.repository.UserRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
 
@@ -19,10 +19,12 @@ import dagger.hilt.android.components.FragmentComponent
 
 @InstallIn(FragmentComponent::class)
 @Module
-class UserRepositoryModule {
+abstract class UserModule {
 
-    @Provides
-    fun providesUserRepository(): UserRepository {
-        return FirebaseRepository()
-    }
+    /**
+     * Since we have @Injected our SQLRepository,
+     * Dagger knows how to create the object and we can directly bind it to UserRepository
+     */
+    @Binds
+    abstract fun bindSQLRepository(sqlRepository: SQLRepository): UserRepository
 }
