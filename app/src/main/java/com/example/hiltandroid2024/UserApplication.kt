@@ -1,9 +1,7 @@
 package com.example.hiltandroid2024
 
 import android.app.Application
-import com.example.hiltandroid2024.repository.UserRepository
 import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
 
 /**
  * @HiltAndroidApp triggers Hilt's code generation, including a base class for your application
@@ -11,13 +9,6 @@ import javax.inject.Inject
  * which means that other containers can access the dependencies that it provides.
  */
 @HiltAndroidApp
-class UserApplication : Application() {
+class UserApplication : Application()
 
-    @Inject
-    lateinit var userRepository: UserRepository
-    override fun onCreate() {
-        super.onCreate()
-        userRepository.saveUser("UserApplication","UserApplication@application.com")
-    }
-}
 

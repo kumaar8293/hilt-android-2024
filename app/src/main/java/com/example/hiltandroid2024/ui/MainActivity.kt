@@ -1,15 +1,9 @@
 package com.example.hiltandroid2024.ui
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.hiltandroid2024.R
 import com.example.hiltandroid2024.databinding.ActivityMainBinding
-import com.example.hiltandroid2024.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 /**
@@ -25,13 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
-    @Inject
-    lateinit var userRepository: UserRepository
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        userRepository.saveUser("MainActivity", " main@activity.com")
     }
 }
