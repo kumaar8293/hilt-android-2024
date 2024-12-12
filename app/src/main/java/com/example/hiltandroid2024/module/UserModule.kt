@@ -1,11 +1,15 @@
 package com.example.hiltandroid2024.module
 
+import com.example.hiltandroid2024.annotations.FirebaseAnnotation
+import com.example.hiltandroid2024.annotations.SQLAnnotation
+import com.example.hiltandroid2024.repository.FirebaseRepository
 import com.example.hiltandroid2024.repository.SQLRepository
 import com.example.hiltandroid2024.repository.UserRepository
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
+import javax.inject.Named
 
 
 /**
@@ -19,12 +23,28 @@ import dagger.hilt.android.components.FragmentComponent
 
 @InstallIn(FragmentComponent::class)
 @Module
-abstract class UserModule {
-
+class UserModule {
     /**
-     * Since we have @Injected our SQLRepository,
-     * Dagger knows how to create the object and we can directly bind it to UserRepository
+     * Since both function returns the UserRepository object the
+     * dagger will be confused which function to use.
+     *
+     * In this case we will be using @Named annotation.
+     * I have created my own annotation which uses all the properties
+     * of @Named annotation to avoid Name typo issue.
+     *
+     * We have to tell the caller to use the same annotation to get the right object.
      */
-    @Binds
-    abstract fun bindSQLRepository(sqlRepository: SQLRepository): UserRepository
+
+
+    @SQLAnnotation
+    @Provides
+    fun providesSQLRepository(sqlRepository: SQLRepository): UserRepository {
+        return sqlRepository
+    }
+
+    @FirebaseAnnotation
+    @Provides
+    fun providesFirebaseRepository(): UserRepository {
+        return FirebaseRepository()
+    }
 }
