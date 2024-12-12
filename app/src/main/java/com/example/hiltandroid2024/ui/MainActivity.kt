@@ -3,7 +3,9 @@ package com.example.hiltandroid2024.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hiltandroid2024.databinding.ActivityMainBinding
+import com.example.hiltandroid2024.repository.LoggerService
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 /**
@@ -19,9 +21,14 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
+    @Inject
+    lateinit var loggerService: LoggerService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loggerService.log("Calling from application class and object is ${loggerService.hashCode()}")
     }
 }

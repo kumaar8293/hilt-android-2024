@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.hiltandroid2024.annotations.FirebaseAnnotation
 import com.example.hiltandroid2024.databinding.FragmentMainBinding
+import com.example.hiltandroid2024.repository.LoggerService
 import com.example.hiltandroid2024.repository.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -19,6 +20,8 @@ class MainFragment : Fragment() {
     @FirebaseAnnotation
     @Inject
     lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var loggerService: LoggerService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,5 +34,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userRepository.saveUser("Fragment", "main@fragment.com")
+
+        loggerService.log("Calling from application class and object is ${loggerService.hashCode()}")
     }
 }
