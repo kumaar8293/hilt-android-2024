@@ -1,5 +1,6 @@
 package com.example.hiltandroid2024.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -57,5 +58,10 @@ class MainFragment : Fragment() {
         )
 
         loggerService.log("Calling from application class and object is ${loggerService.hashCode()}")
+
+        binding.dummyText.text = "MainFragment  checking hashcode\n ${userRepository.hashCode()} \n ${userRepository2.hashCode()}"
+        binding.dummyText.setOnClickListener {
+            startActivity(Intent(requireContext(), SampleActivity::class.java))
+        }
     }
 }
