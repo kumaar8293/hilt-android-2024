@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
-import javax.inject.Named
+import dagger.hilt.android.scopes.FragmentScoped
 
 
 /**
@@ -23,7 +23,7 @@ import javax.inject.Named
 
 @InstallIn(FragmentComponent::class)
 @Module
-class UserModule {
+object UserModule {
     /**
      * Since both function returns the UserRepository object the
      * dagger will be confused which function to use.
@@ -42,6 +42,7 @@ class UserModule {
         return sqlRepository
     }
 
+    @FragmentScoped
     @FirebaseAnnotation
     @Provides
     fun providesFirebaseRepository(): UserRepository {

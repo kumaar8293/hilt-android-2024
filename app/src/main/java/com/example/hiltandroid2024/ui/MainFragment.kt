@@ -20,6 +20,24 @@ class MainFragment : Fragment() {
     @FirebaseAnnotation
     @Inject
     lateinit var userRepository: UserRepository
+
+    /**
+     * Since we are injecting UserRepository 2 times here,
+     * it will create 2 different object for the UserRepository
+     *
+     * to fix this issue, we need to annotate our UserRepository
+     * provides methods inside our UserModule with Scope
+     * Depending on our requirement. i.e FragmentScope, ActivityScope etc
+     *
+     * Since I am using UserRepository inside fragment only then we
+     * will annotate it with @FragmentScope
+     *
+     * Check UserModule.kt line no 46
+     */
+    @FirebaseAnnotation
+    @Inject
+    lateinit var userRepository2: UserRepository
+
     @Inject
     lateinit var loggerService: LoggerService
 
@@ -33,7 +51,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userRepository.saveUser("Fragment", "main@fragment.com")
+        userRepository.saveUser(
+            "Fragment",
+            "main@fragment.com ${userRepository.hashCode()} ${userRepository2.hashCode()}"
+        )
 
         loggerService.log("Calling from application class and object is ${loggerService.hashCode()}")
     }
