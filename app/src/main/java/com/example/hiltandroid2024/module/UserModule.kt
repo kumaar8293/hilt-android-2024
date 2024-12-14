@@ -9,7 +9,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.components.FragmentComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.android.scopes.FragmentScoped
 
@@ -23,7 +25,7 @@ import dagger.hilt.android.scopes.FragmentScoped
  * And if we use @InstallIn at ActivityComponent level then we can this object in fragment level but not at application level.
  */
 
-@InstallIn(ActivityComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 @Module
 object UserModule {
     /**
@@ -37,14 +39,14 @@ object UserModule {
      * We have to tell the caller to use the same annotation to get the right object.
      */
 
-    @ActivityScoped
+    @ActivityRetainedScoped
     @SQLAnnotation
     @Provides
     fun providesSQLRepository(sqlRepository: SQLRepository): UserRepository {
         return sqlRepository
     }
 
-    @ActivityScoped
+    @ActivityRetainedScoped
     @FirebaseAnnotation
     @Provides
     fun providesFirebaseRepository(): UserRepository {

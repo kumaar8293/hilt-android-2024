@@ -11,6 +11,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SampleActivity : AppCompatActivity() {
 
+    /**
+     * If we rotate the screen then activity will be recreated and UserRepository will be recreated.
+     *
+     * To avoid object recreation we will be using @ActivityRetainedComponent at module level and @ActivityRetainedScoped
+     */
     @FirebaseAnnotation
     @Inject
     lateinit var userRepository: UserRepository
